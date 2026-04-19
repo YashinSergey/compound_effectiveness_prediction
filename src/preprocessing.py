@@ -117,6 +117,7 @@ class DatasetPreprocessor(BaseEstimator, TransformerMixin):
         # Логарифмируем признаки с сильной правой асимметрией
         if self.log_features and self.log_features_:
             for col in self.log_features_:
-                X[col] = np.log1p(X[col])
+                if col in X.columns and X[col].min() > -1:
+                    X[col] = np.log1p(X[col])
 
         return X
